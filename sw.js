@@ -21,6 +21,7 @@ self.addEventListener('fetch', function(event) {
     // caches.match() always resolves
     // but in case of success response will have value
     if (response !== undefined) {
+      console.log('match from cache');
       return response;
     } else {
       return fetch(event.request).then(function (response) {
@@ -28,7 +29,7 @@ self.addEventListener('fetch', function(event) {
         // we need to save clone to put one copy in cache
         // and serve second one
         let responseClone = response.clone();
-        
+        console.log("find from internet");
         caches.open('v1').then(function (cache) {
           cache.put(event.request, responseClone);
         });
